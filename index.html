@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px 30px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            position: relative;
+            backdrop-filter: blur(5px);
+            border: 3px solid #ff4d6d;
+        }
+        
+        h1 {
+            color: #ff4d6d;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px rgba(255, 77, 109, 0.2);
+        }
+        
+        .subtitle {
+            color: #555;
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 18px 45px;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            min-width: 160px;
+        }
+        
+        .btn-yes {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .btn-yes:hover {
+            background-color: #45a049;
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-no {
+            background-color: #f44336;
+            color: white;
+            position: relative;
+        }
+        
+        .btn-no:hover {
+            background-color: #e53935;
+        }
+        
+        .message {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+            border-radius: 20px;
+            color: #333;
+            animation: fadeIn 1s ease;
+            border: 2px dashed #ff4d6d;
+        }
+        
+        .message h2 {
+            color: #ff4d6d;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .message p {
+            font-size: 1.4rem;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        
+        .heart-icon {
+            color: #ff4d6d;
+            margin: 0 10px;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        .hotel-details {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        
+        /* Heart balloons */
+        .heart-balloon {
+            position: absolute;
+            font-size: 2rem;
+            color: #ff4d6d;
+            z-index: 1;
+            animation: float 15s infinite linear;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Floating animation for balloons */
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .btn {
+                padding: 15px 35px;
+                font-size: 1.3rem;
+                min-width: 140px;
+            }
+            
+            .buttons {
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Heart balloons will be added by JavaScript -->
+    
+    <div class="container">
+        <h1>Will You Be My Valentine?</h1>
+        <p class="subtitle">You mean the world to me, and I'd be honored if you'd be my Valentine!</p>
+        
+        <div class="buttons">
+            <button class="btn btn-yes" id="yesBtn">
+                <i class="fas fa-heart"></i> Yes!
+            </button>
+            <button class="btn btn-no" id="noBtn">
+                <i class="fas fa-times"></i> No
+            </button>
+        </div>
+        
+        <div class="message" id="message">
+            <h2><i class="fas fa-heart heart-icon"></i> I knew you'd say yes! <i class="fas fa-heart heart-icon"></i></h2>
+            <p>You've made me the happiest person in the world!</p>
+            <p>Let's celebrate this special day together.</p>
+            
+            <div class="hotel-details">
+                <p><i class="fas fa-map-marker-alt"></i> <strong>Meeting place:</strong> In my dreams.</p>
+                <p><i class="far fa-clock"></i> <strong>Time:</strong> 7:00 PM</p>
+                <p><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> February 14th</p>
+                <p><i class="fas fa-heart"></i> Can't wait to see you, Madam! <i class="fas fa-heart"></i></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create heart balloons
+        function createHeartBalloons() {
+            const heartColors = ['#ff4d6d', '#ff8fa3', '#ff758f', '#ff5678'];
+            const body = document.body;
+            
+            // Create 15 heart balloons
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-balloon';
+                heart.innerHTML = '♥';
+                
+                // Random properties
+                const size = Math.random() * 2 + 1; // Between 1rem and 3rem
+                const color = heartColors[Math.floor(Math.random() * heartColors.length)];
+                const left = Math.random() * 100; // Random horizontal position
+                const delay = Math.random() * 15; // Random animation delay
+                const duration = Math.random() * 10 + 15; // Between 15 and 25 seconds
+                
+                // Apply styles
+                heart.style.left = `${left}vw`;
+                heart.style.fontSize = `${size}rem`;
+                heart.style.color = color;
+                heart.style.animationDelay = `${delay}s`;
+                heart.style.animationDuration = `${duration}s`;
+                
+                body.appendChild(heart);
+            }
+        }
+        
+        // Move the "No" button away when trying to click it
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const message = document.getElementById('message');
+        
+        noBtn.addEventListener('mouseover', function() {
+            // Move the button to a random position
+            const container = document.querySelector('.container');
+            const containerRect = container.getBoundingClientRect();
+            
+            // Calculate max movement within container
+            const maxX = containerRect.width - noBtn.offsetWidth - 20;
+            const maxY = containerRect.height - noBtn.offsetHeight - 20;
+            
+            // Generate random position
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            // Apply the new position
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `${randomX}px`;
+            noBtn.style.top = `${randomY}px`;
+            
+            // Add a funny message
+            noBtn.innerHTML = '<i class="fas fa-running"></i> Try again!';
+            
+            // Change back after a short delay
+            setTimeout(() => {
+                noBtn.innerHTML = '<i class="fas fa-times"></i> No';
+            }, 500);
+        });
+        
+        // Handle "Yes" button click
+        yesBtn.addEventListener('click', function() {
+            // Show the message
+            message.style.display = 'block';
+            
+            // Hide the buttons
+            document.querySelector('.buttons').style.display = 'none';
+            
+            // Create a burst of hearts animation
+            createHeartBurst();
+            
+            // Change the title
+            document.querySelector('h1').textContent = "You've Made Me So Happy!";
+            document.querySelector('.subtitle').textContent = "I can't wait to celebrate Valentine's Day with you!";
+        });
+        
+        // Create a burst of hearts when "Yes" is clicked
+        function createHeartBurst() {
+            const container = document.querySelector('.container');
+            const heartColors = ['#ff4d6d', '#ff8fa3', '#ff758f', '#ff5678'];
+            
+            for (let i = 0; i < 50; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '♥';
+                heart.style.position = 'absolute';
+                heart.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
+                heart.style.fontSize = Math.random() * 1.5 + 1 + 'rem';
+                heart.style.zIndex = '5';
+                heart.style.pointerEvents = 'none';
+                
+                // Random starting position around the yes button
+                const startX = container.offsetLeft + yesBtn.offsetLeft + yesBtn.offsetWidth/2;
+                const startY = container.offsetTop + yesBtn.offsetTop + yesBtn.offsetHeight/2;
+                
+                heart.style.left = `${startX}px`;
+                heart.style.top = `${startY}px`;
+                
+                document.body.appendChild(heart);
+                
+                // Animate heart bursting out
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = 2 + Math.random() * 3;
+                const distance = 50 + Math.random() * 150;
+                
+                const animateHeart = () => {
+                    let progress = 0;
+                    const duration = 1000 + Math.random() * 1000;
+                    const startTime = Date.now();
+                    
+                    const animate = () => {
+                        const currentTime = Date.now();
+                        progress = (currentTime - startTime) / duration;
+                        
+                        if (progress < 1) {
+                            const currentDistance = progress * distance;
+                            const x = startX + Math.cos(angle) * currentDistance;
+                            const y = startY + Math.sin(angle) * currentDistance - (progress * 100); // Some upward motion
+                            
+                            heart.style.left = `${x}px`;
+                            heart.style.top = `${y}px`;
+                            heart.style.opacity = 1 - progress;
+                            
+                            requestAnimationFrame(animate);
+                        } else {
+                            heart.remove();
+                        }
+                    };
+                    
+                    animate();
+                };
+                
+                // Start animation with a small delay for each heart
+                setTimeout(animateHeart, i * 30);
+            }
+        }
+        
+        // Initialize heart balloons when page loads
+        window.addEventListener('load', function() {
+            createHeartBalloons();
+        });
+    </script>
+</body>
+</html>
